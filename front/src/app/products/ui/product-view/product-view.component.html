@@ -1,0 +1,38 @@
+<p-card class="block mb-2">
+  <div class="flex flex-row  justify-content-between align-content-center gap-5">
+    <div class="flex flex-column">
+      <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+      <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+    </div>
+    <div class="flex flex-row align-content-center gap-2">
+      <span class="text-xl font-semibold text-900 mr-2 pt-2">{{ product.price | currency : 'EUR'  }}</span>
+      <p-button icon="pi pi-shopping-cart" [badge]="badgeValue"
+                [outlined]="true" (onClick)="op.toggle($event)" class="flex-auto md:flex-initial white-space-nowrap" [disabled]="false" >
+        <p-overlayPanel #op>
+          <p-inputNumber
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            [inputId]="'product_'+product.id"
+            [step]="1"
+            [ngModel]="productQuantityInCart"
+            decrementButtonClass="p-button-danger mr-1"
+            incrementButtonClass="p-button-success ml-1"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            (onInput)="onQtyChange($event)"
+            min="0"
+          />
+        </p-overlayPanel>
+      </p-button>
+    </div>
+  </div>
+  <p>{{ product.description }}</p>
+  @if (showFooter){
+    <ng-template pTemplate="footer" >
+      <div class="flex gap-3 mt-1">
+        <p-button label="Modifier" severity="secondary" (onClick)="onUpdateProduct(product)"/>
+        <p-button label="Supprimer" severity="danger" (onClick)="onDeleteProduct(product)" />
+      </div>
+    </ng-template>
+  }
+</p-card>

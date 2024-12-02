@@ -2,22 +2,38 @@
 
 <p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
 
-<p-dataView #dv [value]="products()">
-    <ng-template pTemplate="list" let-products>
+<p-dataView #dv [value]="products()" [rows]="4" [paginator]="true">
+  <ng-template pTemplate="header">
+    <div class="flex justify-content-end">
+      <p-dataViewLayoutOptions/>
+    </div>
+  </ng-template>
+    <ng-template pTemplate="list" let-products >
         @for (product of products; track product) {
-            <p-card class="block mb-2">
-                <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
-                <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
-
-                <ng-template pTemplate="footer">
-                    <div class="flex gap-3 mt-1">
-                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
-                        <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
-                    </div>
-                </ng-template>
-            </p-card>
+          <app-product-view [product]="product"
+                            [badgeValue]="badgeValue(product)"
+                            [productQuantityInCart]="productQuantityInCart(product)"
+                            (onCartQtyChange)="onCartQtyChange($event, product)"
+                            (onUpdate)="onUpdate($event)"
+                            (onDelete)="onDelete($event)"
+          />
         }
     </ng-template>
+  <ng-template pTemplate="grid" let-products>
+    <div class="grid grid-nogutter">
+      @for (product of products; track product) {
+        <div class="col-12 sm:col-6 md:col-6 xl:col-6 p-2">
+          <app-product-view [product]="product"
+                            [badgeValue]="badgeValue(product)"
+                            [productQuantityInCart]="productQuantityInCart(product)"
+                            (onCartQtyChange)="onCartQtyChange($event, product)"
+                            (onUpdate)="onUpdate($event)"
+                            (onDelete)="onDelete($event)"
+          />
+        </div>
+      }
+    </div>
+  </ng-template>
 </p-dataView>
 
 <p-dialog [(visible)]="isDialogVisible"

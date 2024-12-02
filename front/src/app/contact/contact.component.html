@@ -1,0 +1,42 @@
+<p-toast />
+<div class="form-container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <h1 class="text-center">Contactez-nous</h1>
+    <div class="grid">
+      <div class="form-field flex flex-column justify-content-start align-content-start col-12 w-100">
+        <label for="email">Email</label>
+        <input pInputText
+               type="email"
+               id="email"
+               formControlName="email"
+               [class]="{'ng-invalid ng-dirty': formGroup.controls.email.touched && formGroup.controls.email.invalid}"
+        >
+        @if (formGroup.controls.email.touched && formGroup.controls.email.invalid){
+          <div class="text-danger">
+            <span>Veillez saisir une adresse email valide</span>
+          </div>
+        }
+      </div>
+      <div class="form-field  flex flex-column justify-content-start align-content-start  col-12 w-100">
+        <label for="message">Votre message</label>
+        <textarea pInputTextarea
+                  id="message"
+                  formControlName="message"
+                  [class]="{'ng-invalid ng-dirty': formGroup.controls.message.touched && formGroup.controls.message.invalid}"
+                  rows="5"
+                  cols="30">
+        </textarea>
+        @if (formGroup.controls.message.touched && formGroup.controls.message.invalid){
+          <div class="text-danger">
+            <span>Veillez saisir votre message. Le message ne doit pas contenir plus de 300 caractères.</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="text-center">
+      <p-button type="submit" label="Envoyer" severity="primary"/>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,15 @@
+
+<p-button icon="pi pi-shopping-cart" [badge]="badgeValue()" (onClick)="op.toggle($event)" [text]="true" >
+  <p-overlayPanel [style]="{maxHeight: '400px', overflow: 'auto'}" #op>
+    <p >Liste des produits</p>
+    @for (item of cartItems(); track item) {
+      <app-product-view
+        [product]="item.product"
+        [badgeValue]="item.quantity + ''"
+        [productQuantityInCart]="item.quantity"
+        (onCartQtyChange)="onCartQtyChange($event, item.product)"
+        [showFooter]="false"
+      />
+    }
+  </p-overlayPanel>
+</p-button>
